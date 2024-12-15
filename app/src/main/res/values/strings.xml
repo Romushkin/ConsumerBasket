@@ -5,4 +5,11 @@
     <string name="weight">Вес, кг</string>
     <string name="price">Цена руб.</string>
     <string name="save">Сохранить</string>
+    <string name="edit">Изменить</string>
+    <string name="remove">Удалить</string>
+    <string name="id">ID</string>
+    <string name="enter_id">Введите id продукта</string>
+    <string name="enter_name">Введите название продукта</string>
+    <string name="enter_weight">Введите вес продукта</string>
+    <string name="enter_price">Введите цену продукта</string>
 </resources>

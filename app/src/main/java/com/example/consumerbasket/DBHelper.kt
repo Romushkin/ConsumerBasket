@@ -33,6 +33,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun addProduct(product: Product) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
+        contentValues.put(KEY_ID, product.id)
         contentValues.put(KEY_NAME, product.name)
         contentValues.put(KEY_WEIGHT, product.weight)
         contentValues.put(KEY_PRICE, product.price)
@@ -52,15 +53,17 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             db.execSQL(selectQuery)
             return productList
         }
+        var id: Int
         var name: String
         var weight: Double
         var price: Double
         if (cursor.moveToFirst()) {
             do {
+                id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 name = cursor.getString(cursor.getColumnIndex(KEY_NAME))
                 weight = cursor.getDouble(cursor.getColumnIndex(KEY_WEIGHT))
                 price = cursor.getDouble(cursor.getColumnIndex(KEY_PRICE))
-                val product = Product(name, weight, price)
+                val product = Product(id, name, weight, price)
                 productList.add(product)
             } while (cursor.moveToNext())
         }
@@ -68,20 +71,21 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     fun updateProduct(product: Product) {
-        val db = this.writableDatabase
         val contentValues = ContentValues()
+        contentValues.put(KEY_ID, product.id)
         contentValues.put(KEY_NAME, product.name)
         contentValues.put(KEY_WEIGHT, product.weight)
         contentValues.put(KEY_PRICE, product.price)
-        db.update(TABLE_NAME, contentValues, "KEY_NAME = ${product.name}", null)
+        val db = this.writableDatabase
+        db.update(TABLE_NAME, contentValues, "id=" + product.id, null)
         db.close()
     }
 
     fun deleteProduct(product: Product) {
-        val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(KEY_NAME, product.name)
-        db.delete(TABLE_NAME,"KEY_NAME = ${product.name}", null)
+        contentValues.put(KEY_ID, product.id)
+        val db = this.writableDatabase
+        db.delete(TABLE_NAME, "id=" + product.id, null)
         db.close()
     }
 

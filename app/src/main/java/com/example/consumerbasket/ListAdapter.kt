@@ -16,10 +16,12 @@ class ListAdapter(private val context: Context, private val productList: List<Pr
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
         }
+        val idTV = view?.findViewById<TextView>(R.id.idTV)
         val nameTV = view?.findViewById<TextView>(R.id.nameTV)
         val weightTV = view?.findViewById<TextView>(R.id.weightTV)
         val priceTV = view?.findViewById<TextView>(R.id.priceTV)
 
+        idTV?.text = item?.id.toString()
         nameTV?.text = item?.name
         weightTV?.text = item?.weight.toString()
         priceTV?.text = item?.price.toString()
